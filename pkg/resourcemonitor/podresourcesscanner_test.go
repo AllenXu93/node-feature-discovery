@@ -548,9 +548,6 @@ func TestPodScanner(t *testing.T) {
 						},
 					},
 				},
-				Status: corev1.PodStatus{
-					QOSClass: corev1.PodQOSGuaranteed,
-				},
 			}
 			fakeCli = fakeclient.NewSimpleClientset(pod)
 			resScan.(*PodResourcesScanner).k8sClient = fakeCli

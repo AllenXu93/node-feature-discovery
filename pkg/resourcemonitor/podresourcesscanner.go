@@ -63,12 +63,7 @@ func (resMon *PodResourcesScanner) isWatchable(podNamespace string, podName stri
 		return false, false, err
 	}
 
-	// Check Pod is guaranteed QOS class and has exclusive CPUs or devices
-	if pod.Status.QOSClass != corev1.PodQOSGuaranteed {
-		return false, false, nil
-	}
-
-	isIntegralGuaranteed := hasExclusiveCPUs(pod)
+	isIntegralGuaranteed := pod.Status.QOSClass == corev1.PodQOSGuaranteed && hasExclusiveCPUs(pod)
 
 	if resMon.namespace == "*" && (isIntegralGuaranteed || hasDevice) {
 		return true, isIntegralGuaranteed, nil
